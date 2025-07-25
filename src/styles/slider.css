@@ -1,0 +1,370 @@
+/* Hide scrollbar */
+.slider-content::-webkit-scrollbar {
+  display: none;
+}
+.slider-content {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Slider Section */
+.slider-section {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: 600px;
+}
+
+/* Slider Header */
+.slider-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.slider-header-icon {
+  font-size: 3rem;
+  color: #3b82f6;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.2));
+}
+
+.slider-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.slider-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  border-radius: 2px;
+}
+
+.slider-subtitle {
+  font-size: 1.125rem;
+  color: #64748b;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* Slider Wrapper */
+.slider-wrapper {
+  position: relative;
+  overflow: visible;
+  padding: 0 60px;
+}
+
+/* Navigation Buttons */
+.slider-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: 2px solid #e5e7eb;
+  color: #374151;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.left-nav-button {
+  left: 0;
+}
+
+.right-nav-button {
+  right: 0;
+}
+
+.slider-nav-button:hover {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+}
+
+.slider-nav-button:focus {
+  outline: none;
+  ring: 2px solid #3b82f6;
+  ring-offset: 2px;
+}
+
+/* Slider Content */
+.slider-content {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 1rem 0;
+}
+
+/* Destination Cards */
+.destination-card {
+  min-width: 260px;
+  max-width: 260px;
+  height: 380px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.destination-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px -4px rgba(0, 0, 0, 0.15), 0 8px 16px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Image Container */
+.card-image-container {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.destination-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.destination-card:hover .destination-image {
+  transform: scale(1.1);
+}
+
+
+/* Card Content */
+.card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  height: 200px; /* Fixed height to ensure consistent layout */
+}
+
+.destination-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.destination-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+  flex-grow: 1;
+}
+
+/* Explore Button - Fixed at bottom */
+.explore-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  margin-top: auto; /* This pushes the button to the bottom */
+  transform: translateY(0);
+}
+
+.explore-button:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  color: white;
+  text-decoration: none;
+}
+
+.explore-icon {
+  font-size: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.explore-button:hover .explore-icon {
+  transform: translateX(4px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .slider-section {
+    padding: 3rem 1.5rem;
+  }
+  
+  .slider-title {
+    font-size: 2.25rem;
+  }
+  
+  .slider-header-icon {
+    font-size: 2.5rem;
+  }
+  
+  .slider-wrapper {
+    padding: 0 50px;
+  }
+  
+  .destination-card {
+    min-width: 240px;
+    max-width: 240px;
+    height: 360px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slider-section {
+    padding: 2rem 1rem;
+  }
+  
+  .slider-header {
+    margin-bottom: 2rem;
+  }
+  
+  .slider-title {
+    font-size: 2rem;
+  }
+  
+  .slider-subtitle {
+    font-size: 1rem;
+  }
+  
+  .slider-header-icon {
+    font-size: 2rem;
+  }
+  
+  .slider-wrapper {
+    padding: 0 40px;
+  }
+  
+  .destination-card {
+    min-width: 220px;
+    max-width: 220px;
+    height: 340px;
+  }
+  
+  .card-content {
+    padding: 1.25rem;
+    height: 180px;
+  }
+  
+  .destination-title {
+    font-size: 1.25rem;
+  }
+  
+  .destination-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .slider-nav-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider-section {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .slider-title {
+    font-size: 1.75rem;
+  }
+  
+  .slider-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .slider-wrapper {
+    padding: 0 35px;
+  }
+  
+  .destination-card {
+    min-width: 200px;
+    max-width: 200px;
+    height: 320px;
+  }
+  
+  .card-image-container {
+    height: 140px;
+  }
+  
+  .card-content {
+    padding: 1rem;
+    height: 160px;
+  }
+  
+  .destination-title {
+    font-size: 1.125rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .destination-subtitle {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .explore-button {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8rem;
+  }
+  
+  .slider-nav-button {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+  
+  .slider-title::after {
+    width: 80px;
+  }
+  
+  .slider-content {
+    gap: 1rem;
+  }
+}
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slider-section {
+  animation: fadeInUp 0.8s ease-out;
+}

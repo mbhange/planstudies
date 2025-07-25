@@ -1,0 +1,56 @@
+   .top-institutions-container {
+     text-align: center;
+     padding: 20px;
+     margin: 40px 0;
+   }
+   .about {
+     font-size: 2.5rem;
+     font-weight: bold;
+     margin-bottom: 30px;
+     color: #333;
+     text-align: center;
+     animation: fadeIn 1.2s ease-in-out;
+   }
+
+   .institutions-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+     gap: 20px;
+     justify-items: center;
+   }
+
+   .institution-card {
+     border: 1px solid #ddd;
+     padding: 20px;
+     border-radius: 10px;
+     text-align: center;
+     background-color: #f9f9f9;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     transition: transform 0.3s ease;
+   }
+
+   .institution-card:hover {
+     transform: translateY(-10px);
+   }
+
+   .institution-logo {
+     max-width: 100%;
+     height: auto;
+     margin-bottom: 15px;
+   }
+
+   h2 {
+     font-size: 2rem;
+     margin-bottom: 20px;
+   }
+
+   h3 {
+     font-size: 1.2rem;
+     margin: 10px 0;
+   }
+
+   p {
+     font-size: 1rem;
+     color: #555;
+     text-align: justify;
+   }

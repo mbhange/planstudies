@@ -1,0 +1,85 @@
+/* .scroll-to-top-button {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.scroll-to-top-button:hover {
+    background-color: #0056b3;
+}
+
+.scroll-to-top-button {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.scroll-to-top-button.show {
+    opacity: 1;
+    visibility: visible;
+} */
+@keyframes arrowUp {
+    0% {
+        transform: translateY(5px);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-2px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.scroll-to-top-button {
+    position: fixed;
+    bottom: 30px;
+    left: 35px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    height: 50px;
+    border-radius: 50%;
+    padding: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Button hover effect */
+.scroll-to-top-button:hover {
+    background-color: #0056b3;
+}
+
+/* Show button when scrolled */
+.scroll-to-top-button.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Arrow animation */
+.scroll-to-top-button span {
+    display: inline-block;
+    animation: arrowUp 0.9s infinite ease-in-out alternate;
+}
