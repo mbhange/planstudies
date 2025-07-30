@@ -32,7 +32,7 @@ DB_USER=root
 DB_PASSWORD=Developer@123
 DB_NAME=user_management
 
-EMAIL_USER=your-email@gmail.com
+EMAIL_USER=support@planstudies.in
 EMAIL_PASS=your-app-password
 
 JWT_SECRET=your-jwt-secret

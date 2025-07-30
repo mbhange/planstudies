@@ -771,7 +771,7 @@ app.post("/api/send-otp-payment", (req, res) => {
     // Send OTP via email
     try {
       let info = await transporter.sendMail({
-        from: '"PlanStudies" <your-email@gmail.com>',
+        from: '"PlanStudies" <support@planstudies.in>',
         to: email,
         subject: "Your OTP Code",
         text: `Your OTP code for payment verification is: ${otp}`,

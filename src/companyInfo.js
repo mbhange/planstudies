@@ -23,7 +23,7 @@ Services:
 Stay Connected:
 Follow us for study abroad tips, updates, and expert guidance:
 🌍 Website: [www.planstudies.com]
-📩 Email: [Inquiry@planstudies.com]
+📩 Email: [support@planstudies.in]
 📱 Facebook: [PlanStudies]
 📸 Instagram: [PlanStudies]
 🔗 LinkedIn: [Insert LinkedIn Link]

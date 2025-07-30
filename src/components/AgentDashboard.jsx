@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaUniversity, FaUserCircle, FaClipboardList, FaSearch, FaFileAlt, FaUserGraduate, FaArrowRight } from "react-icons/fa";
-import Navbar from "./NavbarStudent";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { IoClose } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
@@ -12,6 +12,7 @@ import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import "../styles/AgentDashboard.css";
 
 export default function StudentDashboard() {
   const userEmail = localStorage.getItem("userEmail") || "";
@@ -298,37 +299,61 @@ export default function StudentDashboard() {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div>
+    <div 
+      className="dashboard-container" 
+      style={{ 
+        background: 'linear-gradient(135deg, #1b73b9, #2980b9)', 
+        minHeight: '100vh' 
+      }}
+    >
       <Navbar />
+      <div className="dashboard-content">
+        {/* Header Section */}
+        <div className="dashboard-header">
+          <div className="header-content">
+            <div className="welcome-section">
+              <h1 className="dashboard-title">
+                🏢 Agent Dashboard
+              </h1>
+              <p className="dashboard-subtitle">
+                Manage your <span className="highlight">students</span> and <span className="highlight">applications,</span> and track progress effortlessly!
+              </p>
+              <div className="title-underline"></div>
+            </div>
+            
+            <div className="header-actions">
+              <button
+                className="notification-btn"
+                onClick={() => handleOpenChat({ email: "admin@planstudies.com", name: "Admin" })}
+              >
+                <FaBell size={24} />
+                {notifications > 0 && (
+                  <span className="notification-badge">
+                    {notifications}
+                  </span>
+                )}
+              </button>
+              <Link to="/fees">
+                <button className="action-btn primary">
+                  Pay Fees
+                </button>
+              </Link>
+              
+              <Link to="/request">
+                <button className="action-btn success">
+                  + Request Course Options
+                </button>
+              </Link>
 
-      {/* Header Section */}
-      <div>
-        <div className="px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          {/* Dashboard Title */}
-          <div className="text-center sm:text-left space-y-3">
-            <h1 className="text-4xl sm:text-4xl font-extrabold bg-gradient-to-r from-blue-500 via-purple-600 to-blue-700 text-transparent bg-clip-text animate-pulse">
-              <span className="text-black">📚</span> Welcome to Your Dashboard
-            </h1>
-            <p className="text-base sm:text-lg text-gray-700 font-normal">
-              Manage your <span className="text-blue-600 font-medium">students</span> <span>and</span> <span className="text-blue-600 font-medium">applications,</span> and track progress effortlessly!
-            </p>
-
-            <div className="h-1 w-24 bg-blue-600 rounded-full mx-auto sm:mx-0"></div>
+              <Link to="/docs">
+                <button className="action-btn success">
+                  + Add New Student
+                </button>
+              </Link>
+            </div>
           </div>
+        </div>
 
-          {/* Buttons Group */}
-          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-            <button
-              className="relative bg-gray-200 p-2 rounded-full"
-              onClick={() => handleOpenChat({ email: "admin@planstudies.com", name: "Admin" })}
-            >
-              <FaBell className="text-gray-700" size={24} />
-              {notifications > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                  {notifications}
-                </span>
-              )}
-            </button>
             {openChat && (
               <div className="fixed bottom-10 right-10 w-96 z-50 bg-white/30 backdrop-blur-lg shadow-2xl rounded-xl p-4 border border-white/30 transition-all duration-500 transform scale-100 ">
 
@@ -477,37 +502,18 @@ export default function StudentDashboard() {
                 </div>
               </div>
             )}
-            <Link to="/fees">
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 w-full sm:w-auto">
-                Pay Fees
-              </button>
-            </Link>
-            
-            <Link to="/request">
-              <button className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 w-full sm:w-auto">
-                + Request Course Options from PlanStudies
-              </button>
-            </Link>
-
-            <Link to="/docs">
-              <button className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 w-full sm:w-auto">
-                + Add New Student
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
 
 
       {/* Welcome Card */}
-      <div className="px-6 pb-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="p-6 bg-white shadow-lg rounded-xl flex flex-wrap lg:flex-nowrap items-center gap-x-6 lg:gap-x-12 justify-between">
+      <div className="px-6 pb-6">
+        <div className="agent-content">
+          <div className="p-6 flex flex-wrap lg:flex-nowrap items-center gap-x-6 lg:gap-x-12 justify-between">
           <motion.div
             whileHover={{ scale: 1.05 }}
             className="cursor-pointer"
             onClick={() => setIsOpen(true)}
           >
-            <div className="p-4 shadow-lg border rounded-lg bg-white flex items-center gap-4">
+            <div className="p-4 flex items-center gap-4" style={{background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
               {profileImage ? (
                 <img
                   src={typeof profileImage === "string" ? profileImage : URL.createObjectURL(profileImage)}
@@ -519,16 +525,16 @@ export default function StudentDashboard() {
               )}
 
               <div>
-                <h2 className="text-xl font-semibold">Welcome, {fullName}</h2>
-                <p className="text-gray-500">Check your latest updates below</p>
+                <h2 className="text-xl font-semibold text-gray-800">Welcome, {fullName}</h2>
+                <p className="text-gray-600">Check your latest updates below</p>
               </div>
             </div>
           </motion.div>
 
           {/* Profile Management Modal */}
           {isOpen && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-              <div className="bg-white rounded-xl shadow-lg p-6 w-[90%] max-w-md relative">
+            <div className="modal-overlay">
+              <div className="modal-content">
                 <button
                   className="absolute top-3 right-3 text-gray-600 hover:text-red-500"
                   onClick={() => setIsOpen(false)}
@@ -598,25 +604,25 @@ export default function StudentDashboard() {
             </div>
           )}
           {/* Filters Section */}
-          <div className="flex flex-wrap lg:flex-nowrap items-center gap-4 flex-grow justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex items-center gap-4 w-full">
+          <div className="w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex items-center gap-4 mb-4">
 
               {/* Date Inputs */}
               <div className="flex flex-col sm:flex-row gap-4 w-full">
                 <div className="w-full sm:w-1/2">
-                  <label className="text-gray-700 font-semibold block mb-1">From Date:</label>
-                  <input type="date" className="border rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-blue-500 transition" />
+                  <label className="filter-label">From Date:</label>
+                  <input type="date" className="filter-input" />
                 </div>
                 <div className="w-full sm:w-1/2">
-                  <label className="text-gray-700 font-semibold block mb-1">To Date:</label>
-                  <input type="date" className="border rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-blue-500 transition" />
+                  <label className="filter-label">To Date:</label>
+                  <input type="date" className="filter-input" />
                 </div>
               </div>
 
               {/* Country Selection */}
               <div className="w-full">
-                <label className="text-gray-700 font-semibold block mb-1">Select Country:</label>
-                <select className="border rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-blue-500 transition">
+                <label className="filter-label">Select Country:</label>
+                <select className="filter-select">
                   <option value="">All Countries</option>
                   <option>USA</option>
                   <option>Canada</option>
@@ -638,8 +644,8 @@ export default function StudentDashboard() {
 
               {/* Intake Selection */}
               <div className="w-full">
-                <label className="text-gray-700 font-semibold block mb-1">Select Intake:</label>
-                <select className="border rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-blue-500 transition">
+                <label className="filter-label">Select Intake:</label>
+                <select className="filter-select">
                   <option value="">All Intakes</option>
                   <option>Spring</option>
                   <option>Fall</option>
@@ -649,8 +655,8 @@ export default function StudentDashboard() {
 
               {/* Year Selection */}
               <div className="w-full">
-                <label className="text-gray-700 font-semibold block mb-1">Select Year:</label>
-                <select className="border rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-blue-500 transition">
+                <label className="filter-label">Select Year:</label>
+                <select className="filter-select">
                   <option value="">All Years</option>
                   <option>2024</option>
                   <option>2025</option>
@@ -659,27 +665,29 @@ export default function StudentDashboard() {
               </div>
 
             </div>
-          </div>
-
-          {/* Apply Filter Button */}
-          <div>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md transition duration-300">
-              Apply Filter
-            </button>
+            
+            {/* Apply Filter Button Below */}
+            <div className="w-full">
+              <button className="action-btn primary w-full">
+                Apply Filter
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      </div>
 
       {/* Dashboard Grid */}
-      <div className="px-6 pb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="agent-stats-container">
+        <div className="agent-stats">
         {/* Application Status Box */}
-        <motion.div className="col-span-1" whileHover={{ scale: 1.05 }}>
-          <div className="p-4 shadow-lg border rounded-lg bg-white">
+        <motion.div className="stat-card" whileHover={{ scale: 1.05 }}>
+          <div className="p-4">
             <div className="flex items-center mb-2">
-              <FaClipboardList className="mr-2 text-blue-500" />
-              <span className="text-lg font-semibold">Applications</span>
+              <FaClipboardList className="mr-2" style={{color: '#60a5fa'}} />
+              <span className="stat-title">Applications</span>
               <div className="ml-2 mt-2" style={{ marginTop: "13px" }}>
-                <select className="border rounded px-3 py-1 cursor-pointer">
+                <select className="filter-select" style={{fontSize: '0.75rem'}}>
                   <option>All Applications</option>
                   <option>On hold</option>
                   <option>Submitted</option>
@@ -687,89 +695,110 @@ export default function StudentDashboard() {
                 </select>
               </div>
             </div>
-            <p className="font-semibold text-blue-500 text-3xl mt-4">0</p>
+            <p className="stat-value mt-4">0</p>
           </div>
         </motion.div>
 
         {/* Offers Box */}
-        <motion.div className="col-span-1" whileHover={{ scale: 1.05 }}>
-          <div className="p-4 shadow-lg border rounded-lg bg-white">
+        <motion.div className="stat-card" whileHover={{ scale: 1.05 }}>
+          <div className="p-4">
             <div className="flex items-center mb-2">
-              <FaClipboardList className="mr-2 text-blue-500" />
-              <span className="text-lg font-semibold">Offers</span>
+              <FaClipboardList className="mr-2" style={{color: '#60a5fa'}} />
+              <span className="stat-title">Offers</span>
               <div className="ml-2 mt-2" style={{ marginTop: "13px" }}>
-                <select className="border rounded px-3 py-1 cursor-pointer">
+                <select className="filter-select" style={{fontSize: '0.75rem'}}>
                   <option>Offers</option>
                   <option>Conditional</option>
                   <option>Unconditional</option>
                 </select>
               </div>
             </div>
-            <p className="font-semibold text-blue-500 text-3xl mt-4">0</p>
+            <p className="stat-value mt-4">0</p>
           </div>
         </motion.div>
 
         {/* Payment Box */}
-        <motion.div className="col-span-1" whileHover={{ scale: 1.05 }}>
-          <div className="p-4 shadow-lg border rounded-lg bg-white">
-            <h3 className="text-lg font-semibold mb-2 flex items-center text-gray-900">
-              <FaUniversity className="mr-2 text-blue-500" /> Payment Status
+        <motion.div className="stat-card" whileHover={{ scale: 1.05 }}>
+          <div className="p-4">
+            <h3 className="stat-title mb-2 flex items-center">
+              <FaUniversity className="mr-2" /> Payment Status
             </h3>
-            <p className="font-semibold text-blue-500 text-3xl">0</p>
+            <p className="stat-value">0</p>
           </div>
         </motion.div>
 
         {/* Additional Sections (Visa, Non-Enrollments, etc.) */}
         {["Visas Received", "Visas Rejected", "Non-Enrollments", "Deferrals"].map((title, index) => (
-          <motion.div key={index} className="col-span-1" whileHover={{ scale: 1.05 }}>
-            <div className="p-4 shadow-lg border rounded-lg bg-white">
-              <h3 className="text-lg font-semibold mb-2 flex items-center text-gray-900">
-                <FaUniversity className="mr-2 text-blue-500" /> {title}
+          <motion.div key={index} className="stat-card" whileHover={{ scale: 1.05 }}>
+            <div className="p-4">
+              <h3 className="stat-title mb-2 flex items-center">
+                <FaUniversity className="mr-2" /> {title}
               </h3>
-              <p className="font-semibold text-blue-500 text-3xl">0</p>
+              <p className="stat-value">0</p>
             </div>
           </motion.div>
         ))}
+        </div>
       </div>
 
-      <div className="px-6 pb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Card Wrapper */}
+      <div className="action-cards-container">
+        <div className="action-cards-grid">
+        {/* Search Programs Card */}
         <motion.div
-          className="p-6 bg-white shadow-lg rounded-xl flex flex-col items-center md:items-start text-center md:text-left"
+          className="action-card"
           whileHover={{ scale: 1.05 }}
         >
-          <div className="p-6 w-full sm:w-64 h-auto shadow-lg border rounded-lg bg-white flex flex-col items-start relative">
-            <div className="flex items-center gap-2 mb-1">
-              <FaSearch className="text-4xl text-blue-500" />
+          <div className="action-card-content">
+            <div className="flex items-center gap-3 mb-3">
+              <FaSearch className="text-3xl text-blue-500" />
+              <h3 className="text-lg font-semibold text-gray-900">Search Programs</h3>
             </div>
-            <h3 className="text-base font-semibold text-gray-900">Search Programs</h3>
-            <p className="text-xs text-gray-700 mt-2">
+            <p className="text-sm text-gray-700 mb-4 leading-relaxed">
               Discover 150,000+ programs with PlanStudies. Filter, compare, and apply to multiple institutions effortlessly.
             </p>
             <Link to="/course-finder">
-              <FaArrowRight className="text-blue-500 text-xl absolute bottom-4 right-4 cursor-pointer" />
+              <div className="action-card-button">
+                <span>Explore Programs</span>
+                <FaArrowRight className="ml-2" />
+              </div>
             </Link>
           </div>
         </motion.div>
 
+        {/* Students Card */}
         <motion.div
-          className="p-6 bg-white shadow-lg rounded-xl flex flex-col items-center md:items-start text-center md:text-left"
+          className="action-card"
           whileHover={{ scale: 1.05 }}
         >
-          <div className="p-6 w-full sm:w-64 h-auto shadow-lg border rounded-lg bg-white flex flex-col items-start relative">
-            <div className="relative">
-              <FaUserGraduate className="text-6xl text-blue-500 mb-1" />
+          <div className="action-card-content">
+            <div className="flex items-center gap-3 mb-3">
+              <FaUserGraduate className="text-3xl text-blue-500" />
+              <h3 className="text-lg font-semibold text-gray-900">Students</h3>
             </div>
-            <h3 className="text-base font-semibold text-gray-900">Students</h3>
-            <div className="mt-3">
-              <Link to="/manage-students" className="text-blue-500 underline block text-xs">Manage Students</Link>
-              <Link to="/manage-applications" className="text-blue-500 underline block mt-2 text-xs">Manage Applications</Link>
+            <p className="text-sm text-gray-700 mb-4 leading-relaxed">
+              Manage your students and track their application progress efficiently.
+            </p>
+            <div className="space-y-2">
+              <Link to="/manage-students">
+                <div className="action-card-link">
+                  <span>Manage Students</span>
+                  <FaArrowRight className="ml-2 text-xs" />
+                </div>
+              </Link>
+              <Link to="/manage-applications">
+                <div className="action-card-link">
+                  <span>Manage Applications</span>
+                  <FaArrowRight className="ml-2 text-xs" />
+                </div>
+              </Link>
             </div>
           </div>
         </motion.div>
       </div>
+      </div>
 
-      <Footer />
+        <Footer />
+      </div>
     </div>
   );
 }

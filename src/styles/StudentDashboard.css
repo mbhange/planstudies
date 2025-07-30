@@ -118,18 +118,4 @@
       width: 100%;
     }
   }
-  .logout-button {
-    background-color: #1B73B9;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 10px 0;
-  }
-  
-  .logout-button:hover {
-    background-color: #155E8B;
-  }
   

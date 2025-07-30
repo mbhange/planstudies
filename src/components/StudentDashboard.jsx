@@ -30,7 +30,7 @@ const getCurrencySymbol = (countryName) => {
 };
 
 
-const OdooCourses = () => {
+const StudentDashboard = () => {
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -1061,4 +1061,4 @@ const OdooCourses = () => {
 
   );
 };
-export default OdooCourses;
+export default StudentDashboard;

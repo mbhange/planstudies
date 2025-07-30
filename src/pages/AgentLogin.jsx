@@ -12,6 +12,7 @@ const StudentLogin = () => {
     const savedData = JSON.parse(localStorage.getItem(email));
     if (savedData && savedData.password === password && savedData.role === 'agent') {
       alert('Login successful!');
+      localStorage.setItem('userEmail', email);
       navigate('/agent-dashboard');
     } else {
       alert('Invalid credentials or role mismatch');
