@@ -25,7 +25,7 @@ import Ireland from "../src/pages/Ireland";
 import StudentLogin from "./pages/StudentLogin";
 import AdminLogin from "../src/pages/AdminLogin";
 import AgentLogin from "../src/pages/AgentLogin";
-import StudentDashboard from "./components/StudentDashboard";
+import CourseFinder from "./components/CourseFinder";
 import AdminDashboard from "./components/AdminDashboard";
 import AgentDashboard from "./components/AgentDashboard";
 import Login from "./pages/Login";
@@ -110,7 +110,8 @@ const App = () => {
           <Route path="agent-login" element={<AgentLogin />} />
           <Route path="student-dash" element={<StudentDsh />} />
           <Route path="/" element={<StudentDsh />} />
-          <Route path="course-finder" element={<StudentDashboard />} />
+          {/* <Route path="course-finder" element={<StudentDashboard />} /> */}
+          <Route path="course-finder" element={<CourseFinder />} />
           <Route path="admin-dashboard" element={<AdminDashboard />} />
           <Route path="sub-admin-usa-dashboard" element={<SubAdminUS />} />
           <Route

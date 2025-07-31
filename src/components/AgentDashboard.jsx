@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaUniversity, FaUserCircle, FaClipboardList, FaSearch, FaFileAlt, FaUserGraduate, FaArrowRight } from "react-icons/fa";
-import Navbar from "./Navbar";
+import Navbar from "./NavbarStudent";
 import Footer from "./Footer";
 import { IoClose } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
