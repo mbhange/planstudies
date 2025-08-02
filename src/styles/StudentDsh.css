@@ -10,9 +10,9 @@ body {
   padding: 0;
 }
 
-/* Ensure navbar and footer are full width without margins */
-.navbar-container,
-.footer {
+/* Ensure navbar and footer are full width without margins - only in dashboard context */
+.dashboard-container .navbar-container,
+.dashboard-container .footer {
   margin: 0;
   width: 100vw;
   position: relative;
