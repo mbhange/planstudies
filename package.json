@@ -34,15 +34,17 @@
     "react-scripts": "5.0.1",
     "react-spinners": "^0.15.0",
     "react-toastify": "^11.0.5",
+    "react-window": "^1.8.11",
     "recharts": "^2.15.1",
     "socket.io-client": "^4.8.1",
     "swiper": "^11.2.10",
     "web-vitals": "^4.2.4"
   },
   "scripts": {
-    "start": "react-scripts start --host 192.168.2.101",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start --host 192.168.2.101",
+    "build": "craco build",
+    "build:analyze": "ANALYZE=true craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -79,11 +81,21 @@
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0",
+    "@lhci/cli": "^0.15.1",
+    "@loadable/babel-plugin": "^5.16.1",
+    "@loadable/component": "^5.16.7",
     "autoprefixer": "^10.4.20",
     "caniuse-lite": "^1.0.30001727",
     "identity-obj-proxy": "^3.0.0",
+    "imagemin": "^9.0.1",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^10.0.0",
+    "imagemin-webp": "^8.0.0",
     "jest-environment-jsdom": "^30.0.4",
     "postcss": "^8.5.1",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "workbox-webpack-plugin": "^7.3.0"
   }
 }

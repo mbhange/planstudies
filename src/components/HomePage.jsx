@@ -47,22 +47,49 @@
 
 // export default HomePage;
 
-import React, { useState } from "react";
+import React, { useState, useEffect, memo, useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
+import "../critical.css";
 import "../styles/Home.css";
 import { Link } from "react-router-dom";
 
-const HomePage = () => {
+const HomePage = memo(() => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  const slides = [
-    "https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    "https://images.pexels.com/photos/5905440/pexels-photo-5905440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    "https://images.pexels.com/photos/6147271/pexels-photo-6147271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  ];
+  // Optimized images with WebP support and proper sizing - memoized to prevent re-renders
+  const slides = useMemo(() => [
+    {
+      webp: "https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1&fm=webp",
+      jpg: "https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1",
+      alt: "Students studying abroad"
+    },
+    {
+      webp: "https://images.pexels.com/photos/5905440/pexels-photo-5905440.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1&fm=webp",
+      jpg: "https://images.pexels.com/photos/5905440/pexels-photo-5905440.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1",
+      alt: "University campus"
+    },
+    {
+      webp: "https://images.pexels.com/photos/6147271/pexels-photo-6147271.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1&fm=webp",
+      jpg: "https://images.pexels.com/photos/6147271/pexels-photo-6147271.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1",
+      alt: "International education"
+    },
+  ], []);
+
+  // Preload the first image for faster LCP
+  useEffect(() => {
+    const firstImage = new Image();
+    const secondImage = new Image();
+    
+    firstImage.onload = () => {
+      secondImage.onload = () => setImagesLoaded(true);
+      secondImage.src = slides[1].webp;
+    };
+    firstImage.src = slides[0].webp;
+  }, [slides]);
 
   return (
     <div className="home-container">
@@ -81,15 +108,20 @@ const HomePage = () => {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div
-              className={`slide ${activeIndex === index ? "active" : ""}`}
-              style={{
-                backgroundImage: `url(${slide})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            ></div>
+            <picture className={`slide ${activeIndex === index ? "active" : ""}`}>
+              <source srcSet={slide.webp} type="image/webp" />
+              <img
+                src={slide.jpg}
+                alt={slide.alt}
+                loading={index === 0 ? "eager" : "lazy"}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "center",
+                }}
+              />
+            </picture>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -121,6 +153,6 @@ const HomePage = () => {
       </div>
     </div>
   );
-};
+});
 
 export default HomePage;

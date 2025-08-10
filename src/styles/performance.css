@@ -1,0 +1,97 @@
+/* Performance optimization styles */
+
+/* GPU acceleration for transforms and animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize will-change for animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Remove will-change after animation completes */
+.animation-complete {
+  will-change: auto;
+}
+
+/* Optimize images */
+img {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
+}
+
+/* Optimize expensive properties */
+.expensive-props {
+  contain: layout style paint;
+}
+
+/* Prevent layout thrashing */
+.no-layout-shift {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Critical resource hints */
+.preload-hint::before {
+  content: '';
+  display: none;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><rect fill="transparent"/></svg>');
+}
+
+/* Loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, transparent 37%, #f0f0f0 63%);
+  background-size: 400% 100%;
+  animation: skeleton 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Intersection Observer optimizations */
+.lazy-load-container {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Reduce paint complexity */
+.simple-paint {
+  border-radius: 0;
+  box-shadow: none;
+  background-image: none;
+}
+
+/* Optimize scrolling */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Critical above-the-fold styles */
+.critical {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Non-critical below-the-fold styles */
+.non-critical {
+  content-visibility: auto;
+}
+
+/* Reduce reflow/repaint */
+.stable-layout {
+  contain: layout;
+  transform: translateZ(0);
+}

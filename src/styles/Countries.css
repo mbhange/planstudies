@@ -1,33 +1,191 @@
-/* UsPage.css */
-.country {
-    font-family: 'Poppins', sans-serif;
-    font-size: 3rem;
-    font-weight: 800;
-    color: #2c3e50;
-    text-align: center;
-    margin-bottom: 20px;
-    line-height: 1.2;
+/* Classy Professional Style for Country Pages */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Only apply reset to country page elements */
+.country-page * {
+  box-sizing: border-box;
 }
 
-h2 {
+.country-page {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f9;
+  color: #333;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.country-container {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 0;
+}
+
+.country-header {
+  position: relative;
+  text-align: center;
+  background-color: #e9ecef;
+  padding: 40px 20px;
+}
+
+.country-flag {
+  width: 100px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.country-title {
+  font-size: 2.5rem;
+  margin-top: 20px;
+  color: #1a1a1a;
+}
+
+.country-page .title-underline {
+  width: 120px;
+  height: 4px;
+  background: linear-gradient(135deg, #1b73b9, #2980b9) !important;
+  margin: 20px auto 0;
+}
+
+.country-content {
+  padding: 30px;
+}
+
+.intro-section {
+  margin-bottom: 20px;
+}
+
+.country-description {
+  font-size: 1.1rem;
+  color: #555;
+  text-align: justify;
+  margin-bottom: 10px;
+}
+
+.benefits-section {
+  margin-top: 30px;
+}
+
+.section-heading {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.benefits-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.benefit-card {
+  width: 48%;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.benefit-card:hover {
+  transform: translateY(-10px);
+}
+
+.benefit-icon {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #ff4757;
+}
+
+.benefit-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.benefit-content p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.cta-section {
+  background-color: #ff4757;
+  padding: 40px 20px;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.cta-card {
+  text-align: center;
+}
+
+.cta-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.cta-card p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  background: linear-gradient(135deg, #1b73b9, #2980b9);
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background: linear-gradient(135deg, #2980b9, #1b73b9);
+}
+
+@media (max-width: 768px) {
+  .benefit-card {
+    width: 100%;
+  }
+
+  .country-title {
     font-size: 2rem;
-    color: #2c3e50;
-    margin-bottom: 1rem;
+  }
+
+  .section-heading {
+    font-size: 1.7rem;
+  }
 }
 
-ul {
+@media (max-width: 480px) {
+  .country-flag {
+    width: 80px;
+  }
 
-    padding-left: 20px; 
-  margin-bottom: 1.5rem; 
-}
+  .country-page .title-underline {
+    width: 80px;
+  }
 
-ul li {
-    font-size: 1.1rem; 
-    margin-bottom: 0.8rem; 
-    line-height: 1.5;
-}
+  .country-title {
+    font-size: 1.8rem;
+  }
 
-p {
+  .section-heading {
     font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+  }
 }

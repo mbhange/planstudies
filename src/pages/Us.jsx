@@ -1,47 +1,98 @@
-import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import React from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import "../styles/Countries.css";
 
 const UsPage = () => {
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-        <Navbar />
-      <h1 className='country'>Study in the USA</h1>
-      <img
-        src="https://images.pexels.com/photos/4386429/pexels-photo-4386429.jpeg?auto=compress&cs=tinysrgb&w=600"
-        alt="Study in the USA"
-        style={{
-            width: '25%',
-            height: 'auto',
-            marginBottom: '20px',
-            display: 'block',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            borderRadius: '15px', 
-            animation: 'fadeIn 2s ease-in-out', 
-          }}
-      />
-      <p>
-        The USA is a global leader in education, offering unparalleled opportunities for academic and professional growth.
-        Home to world-class universities and a diverse cultural landscape, studying in the USA is a gateway to success in a
-        variety of fields.
-      </p>
+    <>
+      <Navbar />
+      
+      <div className="country-page">
+        <div className="country-container">
+          <div className="country-header">
+            <div className="flag-container">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1920px-Flag_of_the_United_States.svg.png"
+                alt="USA Flag"
+                className="country-flag"
+              />
+            </div>
+            <h1 className="country-title">Study in the USA</h1>
+            <div className="title-underline"></div>
+          </div>
 
-      <h2>Why Choose the USA?</h2>
-      <ul>
-        <li><strong>•	Top-Ranked Institutions: </strong> The USA hosts some of the world’s best universities and colleges known for innovation and academic excellence.</li>
-        <li><strong>•	Wide Range of Programs: </strong> Choose from diverse programs and disciplines tailored to your career goals.</li>
-        <li><strong>•	Research and Innovation: </strong> Access cutting-edge facilities and opportunities for groundbreaking research.</li>
-        <li><strong>•	Work Opportunities: </strong> Part-time work options for students and post-graduation work opportunities under OPT and CPT programs.</li>
-        <li><strong>•	Cultural Diversity: </strong> Experience a vibrant, multicultural environment that fosters personal and academic growth.</li>
-      </ul>
+          <div className="country-content">
+            <div className="intro-section">
+              <p className="country-description">
+                The USA is a global leader in education, offering unparalleled opportunities for academic and professional growth.
+                Home to world-class universities and a diverse cultural landscape, studying in the USA is a gateway to success in a
+                variety of fields.
+              </p>
+            </div>
 
-      <p>
-        Start your journey to study in the USA with PlanStudies – your partner in achieving global success!
-      </p>
+            <div className="benefits-section">
+              <h2 className="section-heading">Why Choose the USA?</h2>
+              
+              <div className="benefits-list">
+                <div className="benefit-card">
+                  <div className="benefit-icon">🌟</div>
+                  <div className="benefit-content">
+                    <h3>Top-Ranked Institutions</h3>
+                    <p>The USA hosts some of the world's best universities and colleges known for innovation and academic excellence.</p>
+                  </div>
+                </div>
+                
+                <div className="benefit-card">
+                  <div className="benefit-icon">📚</div>
+                  <div className="benefit-content">
+                    <h3>Wide Range of Programs</h3>
+                    <p>Choose from diverse programs and disciplines tailored to your career goals.</p>
+                  </div>
+                </div>
+                
+                <div className="benefit-card">
+                  <div className="benefit-icon">🔬</div>
+                  <div className="benefit-content">
+                    <h3>Research & Innovation</h3>
+                    <p>Access cutting-edge facilities and opportunities for groundbreaking research.</p>
+                  </div>
+                </div>
+                
+                <div className="benefit-card">
+                  <div className="benefit-icon">💼</div>
+                  <div className="benefit-content">
+                    <h3>Work Opportunities</h3>
+                    <p>Part-time work options for students and post-graduation work opportunities under OPT and CPT programs.</p>
+                  </div>
+                </div>
+                
+                <div className="benefit-card">
+                  <div className="benefit-icon">🌍</div>
+                  <div className="benefit-content">
+                    <h3>Cultural Diversity</h3>
+                    <p>Experience a vibrant, multicultural environment that fosters personal and academic growth.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="cta-section">
+              <div className="cta-card">
+                <h3>Ready to Start Your Journey?</h3>
+                <p>Start your journey to study in the USA with PlanStudies – your partner in achieving global success!</p>
+                <Link to="/contact" className="cta-button">
+                  Get Started Now
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <Footer />
-    </div>
+    </>
   );
 };
 

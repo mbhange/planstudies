@@ -1,29 +1,52 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
+
+// Eager load above-the-fold components
 import Navbar from "../components/Navbar";
 import HomePage from "../components/HomePage";
-import InfoSection from "../components/InfoSection";
-import Slider from "../components/Slider";
-import Statistics from "../components/Statistics";
-import Footer from "../components/Footer";
-import Popup from "../components/Popup";
-import FaqSection from "../components/FaqSection";
-import Testimonial from "../components/Testimonial";
-// import "../styles/Inquiry.css"
+
+// Lazy load below-the-fold components
+const InfoSection = lazy(() => import("../components/InfoSection"));
+const Slider = lazy(() => import("../components/Slider"));
+const Statistics = lazy(() => import("../components/Statistics"));
+const Footer = lazy(() => import("../components/Footer"));
+const Popup = lazy(() => import("../components/Popup"));
+const FaqSection = lazy(() => import("../components/FaqSection"));
+const Testimonial = lazy(() => import("../components/Testimonial"));
+
+// Loading component
+const ComponentLoader = () => (
+  <div className="flex justify-center items-center py-8">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+  </div>
+);
 
 
 const Home = () => {
     return(
         <div>
-            <Popup />
+            <Suspense fallback={<ComponentLoader />}>
+                <Popup />
+            </Suspense>
             <Navbar />
             <HomePage />
-            <InfoSection />
-            <Slider />
-            <Statistics />
-            <Testimonial />
-            <FaqSection />
-            <Footer />
-            {/* <Inquiry /> */}
+            <Suspense fallback={<ComponentLoader />}>
+                <InfoSection />
+            </Suspense>
+            <Suspense fallback={<ComponentLoader />}>
+                <Slider />
+            </Suspense>
+            <Suspense fallback={<ComponentLoader />}>
+                <Statistics />
+            </Suspense>
+            <Suspense fallback={<ComponentLoader />}>
+                <Testimonial />
+            </Suspense>
+            <Suspense fallback={<ComponentLoader />}>
+                <FaqSection />
+            </Suspense>
+            <Suspense fallback={<ComponentLoader />}>
+                <Footer />
+            </Suspense>
         </div>
     )
 }

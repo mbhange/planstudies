@@ -1,88 +1,140 @@
-// import React from "react";
-// // import { Link } from 'react-router-dom';
-// import Navbar from "../components/Navbar";
-// import Footer from "../components/Footer";
-// import "../styles/Services.css"
-
-
-// const Services = () => {
-//     return (
-//         <div>
-//             <Navbar />
-//             <div className="services-container">
-//                 <h1 className="services-title">Our Services</h1>
-//                 <div className="services-list">
-//                     <div className="service-item">
-//                         <div className="service-icon">📝</div>
-//                         <h3><b>Admission Process</b></h3>
-//                         <p>Our streamlined admission process ensures a smooth and hassle-free entry into the academic programs.</p>
-//                     </div>
-//                     <div className="service-item">
-//                         <div className="service-icon">✈️</div>
-//                         <h3><b>Visa Process</b></h3>
-//                         <p>Assistance with visa applications, documentation, and procedures to ensure a smooth travel experience for your studies abroad.</p>
-//                     </div>
-//                     <div className="service-item">
-//                         <div className="service-icon">📄</div>
-//                         <h3><b>Documents Guidance</b></h3>
-//                         <p>Receive expert guidance on preparing and submitting important documents for your academic or professional needs.</p>
-//                     </div>
-//                 </div>
-//             </div>
-//             <Footer />
-//         </div>
-//     )
-// }
-// export default Services;
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/Services.css";
 
 const Services = () => {
-    return (
-        <div>
-            <Navbar />
-            <div className="services-container">
-                <h1 className="services-title">Our <span className="highlight">Services</span></h1>
-                <p className="services-subtitle">Empowering Your Study Abroad Journey with Expert Guidance</p>
+  const [expandedService, setExpandedService] = useState(null);
 
-                <div className="services-list">
-                    <div className="service-item">
-                        <div className="service-icon">📝</div>
-                        <h3>Admission Process</h3>
-                        <p>Our streamlined admission process ensures a smooth and hassle-free entry into academic programs worldwide.</p>
-                    </div>
-                    <div className="service-item">
-                        <div className="service-icon">✈️</div>
-                        <h3>Visa Assistance</h3>
-                        <p>Expert guidance on visa applications and procedures for a smooth transition to your dream institution abroad.</p>
-                    </div>
-                    <div className="service-item">
-                        <div className="service-icon">📄</div>
-                        <h3>Document Guidance</h3>
-                        <p>Get expert advice on preparing and submitting essential documents for university admissions.</p>
-                    </div>
-                    <div className="service-item">
-                        <div className="service-icon">🏠</div>
-                        <h3>Accommodation Support</h3>
-                        <p>Find and secure comfortable student accommodation near your university with our assistance.</p>
-                    </div>
-                    <div className="service-item">
-                        <div className="service-icon">💳</div>
-                        <h3>Financial Guidance</h3>
-                        <p>We help you explore scholarships, student loans, and financial aid for your studies.</p>
-                    </div>
-                    <div className="service-item">
-                        <div className="service-icon">🎓</div>
-                        <h3>Career Counseling</h3>
-                        <p>Expert career advice to help you choose the right course and institution based on your goals.</p>
-                    </div>
-                </div>
+  const toggleService = (index) => {
+    setExpandedService(expandedService === index ? null : index);
+  };
+
+  const serviceCategories = [
+    {
+      title: "Coaching Services",
+      icon: "📚",
+      description: "Comprehensive test preparation and language training programs",
+      services: [
+        { name: "IELTS", description: "International English Language Testing System preparation" },
+        { name: "TOEFL", description: "Test of English as a Foreign Language coaching" },
+        { name: "PTE", description: "Pearson Test of English preparation" },
+        { name: "Duolingo", description: "Duolingo English Test preparation" },
+        { name: "GRE", description: "Graduate Record Examinations preparation" },
+        { name: "GMAT", description: "Graduate Management Admission Test coaching" },
+        { name: "SAT", description: "Scholastic Assessment Test preparation" },
+        { name: "Spoken English", description: "Conversational English and communication skills" },
+        { name: "German", description: "German language learning programs" },
+        { name: "French", description: "French language courses and certification" }
+      ]
+    },
+    {
+      title: "Visa Services",
+      icon: "✈️",
+      description: "Complete travel and financial assistance for international students",
+      services: [
+        { name: "Air Ticket", description: "Flight booking assistance and best fare options" },
+        { name: "Forex", description: "Foreign exchange services and currency conversion" },
+        { name: "Education Loan", description: "Student loan guidance and application assistance" },
+        { name: "Foreign Sim Card", description: "International connectivity solutions" },
+        { name: "Travel Insurance", description: "Comprehensive travel and health insurance coverage" }
+      ]
+    },
+    {
+      title: "Allied Services",
+      icon: "🛂",
+      description: "Immigration and visa consultancy services for various purposes",
+      services: [
+        { name: "Student Visa", description: "Complete student visa application and processing" },
+        { name: "Spouse Visa", description: "Dependent visa services for family members" },
+        { name: "Visitor Visa", description: "Tourist and visitor visa application assistance" },
+        { name: "Immigration", description: "Permanent residency and immigration consulting" },
+        { name: "Visa Extension", description: "Visa renewal and extension services" }
+      ]
+    }
+  ];
+
+  return (
+    <div>
+      <Navbar />
+      <div className="services-container">
+        {/* Hero Section */}
+        <div className="services-hero">
+          <h1 className="services-title">
+            Our <span className="highlight">Services</span>
+          </h1>
+          <p className="services-subtitle">
+            A way to career abroad - Empowering Your Study Abroad Journey with Expert Guidance
+          </p>
+          
+          {/* Statistics Section */}
+          <div className="stats-section">
+            <div className="stat-item">
+              <span className="stat-number">24+</span>
+              <span className="stat-label">Years of Excellence</span>
             </div>
-            <Footer />
+            <div className="stat-item">
+              <span className="stat-number">60000+</span>
+              <span className="stat-label">Success Stories</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-number">High</span>
+              <span className="stat-label">Visa Success For Refusal Cases</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-number">500+</span>
+              <span className="stat-label">Universities & Colleges</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-number">1-1</span>
+              <span className="stat-label">Personalized Counselling</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-number">12000+</span>
+              <span className="stat-label">Families Settled Abroad</span>
+            </div>
+          </div>
         </div>
-    );
+
+        {/* Main Services Section */}
+        <div className="main-services">
+          {serviceCategories.map((category, index) => (
+            <div key={index} className={`service-category ${expandedService === index ? 'expanded' : ''}`}>
+              <div className="service-category-header" onClick={() => toggleService(index)}>
+                <div className="service-category-icon">{category.icon}</div>
+                <div className="service-category-content">
+                  <h2 className="service-category-title">{category.title}</h2>
+                  <p className="service-category-description">{category.description}</p>
+                </div>
+                <div className="expand-arrow">
+                  {expandedService === index ? '−' : '+'}
+                </div>
+              </div>
+              
+              <div className="service-category-details">
+                <div className="services-grid">
+                  {category.services.map((service, serviceIndex) => (
+                    <div key={serviceIndex} className="service-card">
+                      <h4 className="service-name">{service.name}</h4>
+                      <p className="service-description">{service.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Call to Action Section */}
+        <div className="cta-section">
+          <h2>Ready to Start Your Journey?</h2>
+          <p>Get personalized counselling from our experts and take the first step towards your dream career abroad.</p>
+          <button className="btn-white-professional px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300">Book Free Consultation</button>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default Services;

@@ -1,0 +1,4 @@
+id,amount,payment_method,transaction_id,date,status
+1,100.50,Credit Card,TXN001,2025-08-02T06:15:32.000Z,pending
+2,250.75,PayPal,TXN002,2025-08-02T06:15:42.000Z,pending
+3,75.00,Bank Transfer,TXN003,2025-08-02T06:15:50.000Z,pending

@@ -553,36 +553,57 @@ export default function StudentDashboard() {
             <div ref={chatContainerRef} className="chat-messages">
               {messages.length > 0 ? (
                 messages.map((msg, index) => {
-                  const adminEmails = [
-                    "admin@planstudies.com",
-                    "yashd@gmail.com",
-                    "usadmin@gmail.com",
-                  ];
-                  const isAdminMessage = adminEmails.includes(msg.sender_email);
+                  // Check if message is from current logged-in user (student)
+                  const isUserMessage = msg.sender_email === receiverEmail;
 
                   return (
                     <div
                       key={index}
-                      className={`message ${isAdminMessage ? "admin" : "user"}`}
+                      className={`flex ${isUserMessage ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`message-bubble ${
-                          isAdminMessage ? "admin" : "user"
-                        }`}
+                        className="max-w-xs lg:max-w-md"
                       >
-                        {msg.message}
-                        {msg.file_url && (
-                          <div className="file-attachment">
-                            <a
-                              href={`http://localhost:5000${msg.file_url}`}
-                              download
-                              className="file-link"
-                            >
-                              <FaPaperclip />
-                              <span>{msg.file_url.split("/").pop()}</span>
-                            </a>
-                          </div>
-                        )}
+                        <div
+                          className={`px-4 py-3 rounded-2xl shadow-lg ${
+                            isUserMessage
+                              ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
+                              : "bg-white text-slate-800 border border-slate-200"
+                          }`}
+                        >
+                          <p className="text-sm leading-relaxed">
+                            {msg.message}
+                          </p>
+                          {msg.file_url && (
+                            <div className="mt-3 p-3 bg-white/20 rounded-xl backdrop-blur-sm border border-white/30">
+                              <a
+                                href={`http://localhost:5000${msg.file_url}`}
+                                download
+                                className="text-current hover:opacity-80 flex items-center justify-between transition-all duration-200"
+                              >
+                                <div className="flex items-center space-x-2">
+                                  <FaPaperclip className="text-sm" />
+                                  <span className="text-xs font-medium truncate">
+                                    {msg.file_url.split("/").pop()}
+                                  </span>
+                                </div>
+                                <span className="text-xs bg-white/30 px-2 py-1 rounded-full ml-2">
+                                  Download
+                                </span>
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                        <div
+                          className={`text-xs text-slate-500 mt-1 px-1 ${
+                            isUserMessage ? "text-right" : "text-left"
+                          }`}
+                        >
+                          {new Date().toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </div>
                       </div>
                     </div>
                   );

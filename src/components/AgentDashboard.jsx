@@ -382,48 +382,21 @@ export default function StudentDashboard() {
         </div>
 
         {openChat && (
-          <div className="fixed bottom-10 right-10 w-96 z-50 bg-white/30 backdrop-blur-lg shadow-2xl rounded-xl p-4 border border-white/30 transition-all duration-500 transform scale-100 ">
-            <div className="flex justify-between items-center mb-3 border-b pb-2">
-              <h3 className="font-bold text-lg text-gray-900">
-                💬 Chat with Admin
-              </h3>
-              <div className="flex space-x-2">
+          <div className="chat-modal">
+            <div className="chat-header">
+              <h3 className="chat-title">💬 Chat with Admin</h3>
+              <div className="chat-actions">
                 <button
-                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  className="chat-action-btn"
                   onClick={() => setShowModal(true)}
                 >
-                  <FaTrash size={20} />
+                  <FaTrash />
                 </button>
-                {showModal && (
-                  <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-                    <div className="bg-white p-5 rounded shadow-lg">
-                      <h2 className="text-lg font-semibold">
-                        Confirm Deletion
-                      </h2>
-                      <p>Are you sure you want to delete this chat?</p>
-
-                      <div className="mt-4 flex justify-end space-x-2">
-                        <button
-                          className="px-4 py-2 bg-gray-300 rounded"
-                          onClick={() => setShowModal(false)}
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          className="px-4 py-2 bg-red-500 text-white rounded"
-                          onClick={handleDeleteChat}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
                 <button
                   onClick={() => setOpenChat(null)}
-                  className="text-red-600 hover:text-red-800"
+                  className="chat-action-btn"
                 >
-                  <IoMdClose size={22} />
+                  <IoMdClose />
                 </button>
               </div>
             </div>
