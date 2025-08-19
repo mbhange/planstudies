@@ -35,11 +35,30 @@ const InquiryForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    closePopup();
-    navigate("/create");
+
+    try {
+      const response = await fetch("http://localhost:5000/api/inquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+      console.log("Server response:", result);
+
+      if (result.success) {
+        alert("Your inquiry has been submitted!");
+        closePopup();
+        navigate("/create");
+      }
+    } catch (error) {
+      console.error("Error submitting inquiry:", error);
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (

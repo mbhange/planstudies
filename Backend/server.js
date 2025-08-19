@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
@@ -29,7 +29,10 @@ const ODOO_DB = process.env.ODOO_DB;
 const ODOO_USERNAME = process.env.ODOO_USERNAME;
 const ODOO_PASSWORD = process.env.ODOO_PASSWORD;
 
-const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+const client = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
 
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -53,16 +56,25 @@ const transporter = nodemailer.createTransport({
 
 // API route to handle contact form submission
 app.post("/api/contact", (req, res) => {
-  const { firstName, lastName, email, phoneNumber, country, service, message } = req.body;
+  const { firstName, lastName, email, phoneNumber, country, service, message } =
+    req.body;
 
   // Validate incoming data
-  if (!firstName || !lastName || !email || !phoneNumber || !country || !service || !message) {
+  if (
+    !firstName ||
+    !lastName ||
+    !email ||
+    !phoneNumber ||
+    !country ||
+    !service ||
+    !message
+  ) {
     return res.status(400).json({ message: "All fields are required." });
   }
 
   const mailOptions = {
-    from: email,  // User's email
-    to: process.env.CONTACT_EMAIL,  // Your email address
+    from: email, // User's email
+    to: process.env.CONTACT_EMAIL, // Your email address
     subject: `New Inquiry: ${country} - ${service}`,
     text: `
       Name: ${firstName} ${lastName}
@@ -89,7 +101,9 @@ app.post("/api/forgot-password", (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ message: "Email is required." });
 
-  const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "15m" });
+  const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+    expiresIn: "15m",
+  });
 
   const sql = "UPDATE users SET reset_token = ? WHERE email = ?";
   db.query(sql, [token, email], (err, result) => {
@@ -157,39 +171,7 @@ app.post("/api/reset-password", async (req, res) => {
 });
 
 //API to register
-// app.post("/api/register", async (req, res) => {
-//   const { role, fullName, phone_number, email, password } = req.body;
 
-//   if (!role || !email || !password) {
-//     return res.status(400).send("All fields are required.");
-//   }
-//   if (typeof phone_number !== "string") {
-//     return res.status(400).send("Invalid phone number.");
-//   }
-//   phone_number = phone_number.replace(/[^+\d]/g, "");
-
-//   // **Ensure phone_number is not empty after sanitization**
-//   if (!phone_number) {
-//     return res.status(400).send("Invalid phone number after sanitization.");
-//   }
-//   try {
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const sql = "INSERT INTO users (role, fullname, phone_number, email, password) VALUES (?, ?, ?, ?, ?)";
-//     db.query(sql, [role, fullName,  phone_number, email, hashedPassword], (err, result) => {
-//       if (err) {
-//         console.error("Error inserting user:", err);
-//         if (err.code === "ER_DUP_ENTRY") {
-//           return res.status(400).send("Email already exists.");
-//         }
-//         return res.status(500).send("Server error.");
-//       }
-//       res.status(201).send("Account created successfully.");
-//     });
-//   } catch (error) {
-//     console.error("Error hashing password:", error);
-//     res.status(500).send("Error hashing password.");
-//   }
-// });
 app.post("/api/register", async (req, res) => {
   let { role, fullName, phone_number, email, password } = req.body;
 
@@ -203,18 +185,22 @@ app.post("/api/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert into MySQL
-    const sql = "INSERT INTO users (role, fullname, phone_number, email, password) VALUES (?, ?, ?, ?, ?)";
-    db.query(sql, [role, fullName, phone_number, email, hashedPassword], (err, result) => {
-      if (err) {
-        console.error("Error inserting user:", err);
-        if (err.code === "ER_DUP_ENTRY") {
-          return res.status(400).send("Email already exists.");
+    const sql =
+      "INSERT INTO users (role, fullname, phone_number, email, password) VALUES (?, ?, ?, ?, ?)";
+    db.query(
+      sql,
+      [role, fullName, phone_number, email, hashedPassword],
+      (err, result) => {
+        if (err) {
+          console.error("Error inserting user:", err);
+          if (err.code === "ER_DUP_ENTRY") {
+            return res.status(400).send("Email already exists.");
+          }
+          return res.status(500).send("Server error.");
         }
-        return res.status(500).send("Server error.");
+        return res.status(201).send("Account created successfully.");
       }
-      return res.status(201).send("Account created successfully.");
-    });
-
+    );
   } catch (error) {
     console.error("Error hashing password:", error);
     return res.status(500).send("Error hashing password.");
@@ -222,7 +208,8 @@ app.post("/api/register", async (req, res) => {
 });
 
 app.get("/api/register", (req, res) => {
-  const sql = "SELECT id, role, fullname, phone_number, email, created_at FROM users";
+  const sql =
+    "SELECT id, role, fullname, phone_number, email, created_at FROM users";
   db.query(sql, (err, results) => {
     if (err) {
       console.error("Error fetching users:", err);
@@ -233,7 +220,8 @@ app.get("/api/register", (req, res) => {
 });
 
 app.get("/api/sub-admin", (req, res) => {
-  const sql = "SELECT id, role, fullname, phone_number, email, created_at FROM users WHERE role = 'student'";
+  const sql =
+    "SELECT id, role, fullname, phone_number, email, created_at FROM users WHERE role = 'student'";
   // const sql = "SELECT id, role, fullname, phone_number, email, created_at FROM users WHERE role IN ('student', 'admin')";
 
   db.query(sql, (err, results) => {
@@ -244,7 +232,6 @@ app.get("/api/sub-admin", (req, res) => {
     res.json(results);
   });
 });
-
 
 app.delete("/api/register/:id", (req, res) => {
   const userId = req.params.id;
@@ -284,9 +271,9 @@ app.get("/api/user", (req, res) => {
   });
 });
 
-
 app.get("/api/students", (req, res) => {
-  const sql = "SELECT id, fullname, phone_number, email, created_at FROM users WHERE role = 'student'";
+  const sql =
+    "SELECT id, fullname, phone_number, email, created_at FROM users WHERE role = 'student'";
   db.query(sql, (err, results) => {
     if (err) {
       console.error("Error fetching students:", err);
@@ -298,7 +285,8 @@ app.get("/api/students", (req, res) => {
 
 // Get all agents
 app.get("/api/agents", (req, res) => {
-  const sql = "SELECT id, fullname, phone_number, email, created_at FROM users WHERE role = 'agent'";
+  const sql =
+    "SELECT id, fullname, phone_number, email, created_at FROM users WHERE role = 'agent'";
   db.query(sql, (err, results) => {
     if (err) {
       console.error("Error fetching students:", err);
@@ -309,32 +297,7 @@ app.get("/api/agents", (req, res) => {
 });
 
 //API to Login
-// app.post("/api/login", (req, res) => {
-//   const { email, password, role } = req.body;
 
-//   const sql = "SELECT * FROM users WHERE email = ? AND role = ?";
-//   db.query(sql, [email, role], async (err, results) => {
-//       if (err) {
-//           console.error("Error querying user:", err);
-//           return res.status(500).json({ error: "Server error." }); // ✅ Return JSON
-//       }
-//       if (results.length === 0) {
-//           return res.status(401).json({ error: "Invalid credentials." }); // ✅ Return JSON
-//       }
-
-//       const user = results[0];
-//       const isPasswordValid = await bcrypt.compare(password, user.password);
-
-//       if (isPasswordValid) {
-//           return res.status(200).json({ 
-//               message: "Login successful", 
-//               user: { id: user.id, email: user.email, role: user.role } // ✅ Return user data
-//           });
-//       } else {
-//           return res.status(401).json({ error: "Invalid password." }); // ✅ Return JSON
-//       }
-//   });
-// });
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body; // Removed role from request body
 
@@ -354,14 +317,13 @@ app.post("/api/login", (req, res) => {
     if (isPasswordValid) {
       return res.status(200).json({
         message: "Login successful",
-        user: { id: user.id, email: user.email, role: user.role } // Role is still returned but not required for login
+        user: { id: user.id, email: user.email, role: user.role }, // Role is still returned but not required for login
       });
     } else {
       return res.status(401).json({ error: "Invalid password." });
     }
   });
 });
-
 
 app.post("/api/send-otp", (req, res) => {
   const { email } = req.body;
@@ -455,18 +417,82 @@ app.post("/api/odoo/courses", async (req, res) => {
     const totalPages = Math.ceil(totalCourses / resultsPerPage);
 
     const commonFields = [
-      "institute_id", "program_level_id", "semester", "year", "month", "name", "active", "country_id", "state_id", "city_id",
-      "program_url", "application_fees", "currency_id", "total_tuition_fees_amount", "notes", "percentage_score", "scholarship",
-      "program_type", "program_delivery_mode", "cgpa_score", "number_of_backlogs_accepted", "education_gap_allowed", "submission_deadline",
-      "ielts_overall_score", "ielts_listening", "ielts_reading", "ielts_writing", "ielts_speaking", "pte_overall_score", "pte_listening",
-      "pte_reading", "pte_writing", "pte_speaking", "toefl_overall_score", "toefl_listening", "toefl_reading", "toefl_writing", "toefl_speaking",
-      "duolingo_overall_score", "duolingo_literacy", "duolingo_comprehension", "duolingo_conversation", "duolingo_production",
-      "german_language_overall_score", "german_language_listening", "german_language_reading", "german_language_writing", "german_language_speaking",
-      "program_delivery_mode", "french_language_overall_score", "french_language_listening", "french_language_reading", "french_language_writing",
-      "french_language_speaking", "cael_overall_score", "cael_listening", "cael_reading", "cael_writing", "cael_speaking", "celpip_overall_score",
-      "celpip_listening", "celpip_reading", "celpip_writing", "celpip_speaking", "gmat_overall_score", "gmat_analytical_writing", "gmat_integrated_reasoning",
-      "gmat_quantitative_reasoning", "gmat_verbal_reasoning", "gre_overall_score", "gre_analytical_writing", "gre_quantitative_reasoning", "gre_verbal_reasoning",
-      "sat_overall_score", "sat_reading_and_writing", "sat_math"
+      "institute_id",
+      "program_level_id",
+      "semester",
+      "year",
+      "month",
+      "name",
+      "active",
+      "country_id",
+      "state_id",
+      "city_id",
+      "program_url",
+      "application_fees",
+      "currency_id",
+      "total_tuition_fees_amount",
+      "notes",
+      "percentage_score",
+      "scholarship",
+      "program_type",
+      "program_delivery_mode",
+      "cgpa_score",
+      "number_of_backlogs_accepted",
+      "education_gap_allowed",
+      "submission_deadline",
+      "ielts_overall_score",
+      "ielts_listening",
+      "ielts_reading",
+      "ielts_writing",
+      "ielts_speaking",
+      "pte_overall_score",
+      "pte_listening",
+      "pte_reading",
+      "pte_writing",
+      "pte_speaking",
+      "toefl_overall_score",
+      "toefl_listening",
+      "toefl_reading",
+      "toefl_writing",
+      "toefl_speaking",
+      "duolingo_overall_score",
+      "duolingo_literacy",
+      "duolingo_comprehension",
+      "duolingo_conversation",
+      "duolingo_production",
+      "german_language_overall_score",
+      "german_language_listening",
+      "german_language_reading",
+      "german_language_writing",
+      "german_language_speaking",
+      "program_delivery_mode",
+      "french_language_overall_score",
+      "french_language_listening",
+      "french_language_reading",
+      "french_language_writing",
+      "french_language_speaking",
+      "cael_overall_score",
+      "cael_listening",
+      "cael_reading",
+      "cael_writing",
+      "cael_speaking",
+      "celpip_overall_score",
+      "celpip_listening",
+      "celpip_reading",
+      "celpip_writing",
+      "celpip_speaking",
+      "gmat_overall_score",
+      "gmat_analytical_writing",
+      "gmat_integrated_reasoning",
+      "gmat_quantitative_reasoning",
+      "gmat_verbal_reasoning",
+      "gre_overall_score",
+      "gre_analytical_writing",
+      "gre_quantitative_reasoning",
+      "gre_verbal_reasoning",
+      "sat_overall_score",
+      "sat_reading_and_writing",
+      "sat_math",
     ];
 
     let allCourses = [];
@@ -685,8 +711,6 @@ app.post("/api/odoo/courses", async (req, res) => {
 //   }
 // });
 
-
-
 const storage = multer.diskStorage({
   destination: "./uploads/",
   filename: (req, file, cb) => {
@@ -707,7 +731,8 @@ app.post("/api/add-profile", upload.single("profileImage"), (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  const sql = "INSERT INTO user (fullName, email, phoneNumber, profileImage) VALUES (?, ?, ?, ?)";
+  const sql =
+    "INSERT INTO user (fullName, email, phoneNumber, profileImage) VALUES (?, ?, ?, ?)";
   db.query(sql, [fullName, email, phoneNumber, profileImage], (err, result) => {
     if (err) {
       console.error("Error inserting profile:", err);
@@ -737,7 +762,8 @@ app.get("/api/agents", async (req, res) => {
 
 app.get("/api/students", async (req, res) => {
   try {
-    const query = "SELECT id, fullname, email FROM users WHERE role = 'student'";
+    const query =
+      "SELECT id, fullname, email FROM users WHERE role = 'student'";
     console.log("🛠️ Running Query:", query);
     const [students] = await db.execute(query);
 
@@ -789,32 +815,45 @@ app.post("/api/send-otp-payment", (req, res) => {
 // Verify OTP
 app.post("/api/verify-otp-payment", (req, res) => {
   const { email, otp } = req.body;
-  if (!email || !otp) return res.status(400).json({ error: "Email and OTP are required." });
+  if (!email || !otp)
+    return res.status(400).json({ error: "Email and OTP are required." });
 
   const sql = `SELECT * FROM otp_verification WHERE email = ? AND otp_code = ? AND expires_at > NOW()`;
 
   db.query(sql, [email, otp], (err, results) => {
     if (err) return res.status(500).json({ error: "Database error." });
 
-    if (results.length === 0) return res.status(400).json({ error: "Invalid or expired OTP." });
+    if (results.length === 0)
+      return res.status(400).json({ error: "Invalid or expired OTP." });
 
     // Delete OTP after successful verification (optional but recommended)
-    db.query(`DELETE FROM otp_verification WHERE email = ?`, [email], (deleteErr) => {
-      if (deleteErr) return res.status(500).json({ error: "Error deleting OTP." });
+    db.query(
+      `DELETE FROM otp_verification WHERE email = ?`,
+      [email],
+      (deleteErr) => {
+        if (deleteErr)
+          return res.status(500).json({ error: "Error deleting OTP." });
 
-      res.json({ message: "OTP verified successfully!" });
-    });
+        res.json({ message: "OTP verified successfully!" });
+      }
+    );
   });
 });
 
 // ✅ Store a New Payment
 app.post("/api/payments", (req, res) => {
   const { amount, payment_method, transaction_id } = req.body;
-  const query = "INSERT INTO payments (amount, payment_method, transaction_id) VALUES (?, ?, ?)";
+  const query =
+    "INSERT INTO payments (amount, payment_method, transaction_id) VALUES (?, ?, ?)";
 
   db.query(query, [amount, payment_method, transaction_id], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({ message: "Payment recorded successfully", payment_id: result.insertId });
+    res
+      .status(201)
+      .json({
+        message: "Payment recorded successfully",
+        payment_id: result.insertId,
+      });
   });
 });
 
@@ -828,7 +867,8 @@ app.get("/api/payments", (req, res) => {
       query += " WHERE YEAR(date) = YEAR(CURDATE())";
       break;
     case "month":
-      query += " WHERE MONTH(date) = MONTH(CURDATE()) AND YEAR(date) = YEAR(CURDATE())";
+      query +=
+        " WHERE MONTH(date) = MONTH(CURDATE()) AND YEAR(date) = YEAR(CURDATE())";
       break;
     case "week":
       query += " WHERE YEARWEEK(date) = YEARWEEK(CURDATE())";
@@ -838,7 +878,9 @@ app.get("/api/payments", (req, res) => {
       break;
     case "custom":
       if (!from_date || !to_date) {
-        return res.status(400).json({ message: "Please provide both from_date and to_date" });
+        return res
+          .status(400)
+          .json({ message: "Please provide both from_date and to_date" });
       }
       query += ` WHERE DATE(date) BETWEEN '${from_date}' AND '${to_date}'`;
       break;
@@ -854,7 +896,9 @@ const sendOtp = async (req, res) => {
     let { phone } = req.body;
 
     if (!phone) {
-      return res.status(400).json({ success: false, message: "Phone number is required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Phone number is required" });
     }
 
     // ✅ Remove spaces and dashes
@@ -873,7 +917,7 @@ const sendOtp = async (req, res) => {
     await client.messages.create({
       body: `Your OTP is ${otp}`,
       from: process.env.TWILIO_PHONE_NUMBER, // Twilio Number
-      to: phone
+      to: phone,
     });
 
     console.log("✅ OTP sent successfully:", otp);
@@ -887,16 +931,21 @@ const sendOtp = async (req, res) => {
         return res.status(500).json({
           success: false,
           message: "Failed to store OTP in database",
-          error: err.sqlMessage
+          error: err.sqlMessage,
         });
       }
       console.log("✅ OTP stored successfully in MySQL");
       res.json({ success: true, message: "OTP sent successfully!" });
     });
-
   } catch (error) {
     console.error("❌ Error sending OTP:", error);
-    res.status(500).json({ success: false, message: "Error sending OTP", error: error.message });
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error sending OTP",
+        error: error.message,
+      });
   }
 };
 
@@ -908,7 +957,9 @@ app.post("/api/verify-mobile-otp", (req, res) => {
 
   if (!phone || !otp) {
     console.warn("⚠️ Missing phone or OTP in request");
-    return res.status(400).json({ success: false, message: "Phone and OTP are required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Phone and OTP are required" });
   }
 
   // ✅ Normalize phone number (remove spaces and dashes)
@@ -920,23 +971,33 @@ app.post("/api/verify-mobile-otp", (req, res) => {
   console.log("🔍 Verifying OTP for:", phone, "Entered OTP:", otp);
 
   // ✅ Query to fetch the latest OTP for the phone
-  const sql = "SELECT otp FROM otp_verifications WHERE phone = ? ORDER BY created_at DESC LIMIT 1";
+  const sql =
+    "SELECT otp FROM otp_verifications WHERE phone = ? ORDER BY created_at DESC LIMIT 1";
 
   db.query(sql, [phone], (err, result) => {
     if (err) {
       console.error("❌ Database Error:", err.sqlMessage);
-      return res.status(500).json({ success: false, message: "Database error", error: err.sqlMessage });
+      return res
+        .status(500)
+        .json({
+          success: false,
+          message: "Database error",
+          error: err.sqlMessage,
+        });
     }
 
     if (result.length === 0) {
       console.warn("⚠️ No OTP found for phone:", phone);
-      return res.status(400).json({ success: false, message: "No OTP found for this number" });
+      return res
+        .status(400)
+        .json({ success: false, message: "No OTP found for this number" });
     }
 
     const storedOtp = result[0].otp;
     console.log("✅ Stored OTP:", storedOtp, "Entered OTP:", otp);
 
-    if (storedOtp == otp) {  // 🔥 Ensure comparison is correct (string vs number)
+    if (storedOtp == otp) {
+      // 🔥 Ensure comparison is correct (string vs number)
       console.log("✅ OTP Verified Successfully!");
       return res.json({ success: true, message: "OTP verified successfully!" });
     } else {
@@ -954,14 +1015,25 @@ app.post("/api/messages", upload.single("file"), (req, res) => {
     return res.status(400).json({ error: "All fields are required." });
   }
 
-  const query = "INSERT INTO messages (sender_email, receiver_email, message, file_url) VALUES (?, ?, ?, ?)";
-  db.query(query, [sender_email, receiver_email, message, file_url], (err, result) => {
-    if (err) {
-      console.error("Database Error:", err);
-      return res.status(500).json({ error: "Database error. Check server logs." });
+  const query =
+    "INSERT INTO messages (sender_email, receiver_email, message, file_url) VALUES (?, ?, ?, ?)";
+  db.query(
+    query,
+    [sender_email, receiver_email, message, file_url],
+    (err, result) => {
+      if (err) {
+        console.error("Database Error:", err);
+        return res
+          .status(500)
+          .json({ error: "Database error. Check server logs." });
+      }
+      res.json({
+        success: true,
+        message: "Message sent successfully",
+        file_url,
+      });
     }
-    res.json({ success: true, message: "Message sent successfully", file_url });
-  });
+  );
 });
 
 app.get("/api/messages", (req, res) => {
@@ -978,9 +1050,11 @@ app.get("/api/messages", (req, res) => {
   db.query(query, [sender, receiver, receiver, sender], (err, results) => {
     if (err) {
       console.error("Database Error:", err);
-      return res.status(500).json({ error: "Database error. Check server logs." });
+      return res
+        .status(500)
+        .json({ error: "Database error. Check server logs." });
     }
-    console.log("Fetched Messages:", results);  // ✅ Debugging
+    console.log("Fetched Messages:", results); // ✅ Debugging
     res.json(results);
   });
 });
@@ -1001,30 +1075,13 @@ app.delete("/api/messages", (req, res) => {
   db.query(query, [sender, receiver, receiver, sender], (err, result) => {
     if (err) {
       console.error("Database Error:", err);
-      return res.status(500).json({ error: "Database error. Check server logs." });
+      return res
+        .status(500)
+        .json({ error: "Database error. Check server logs." });
     }
     res.json({ success: true, message: "Chat history deleted successfully" });
   });
 });
-
-// app.get("/api/unread-messages/:email", (req, res) => {
-//   const { email } = req.params;
-
-//   const sql = `
-//       SELECT COUNT(*) AS unreadCount 
-//       FROM messages 
-//       WHERE receiver_email = ? AND is_read = 0
-//   `;
-
-//   db.query(sql, [email], (err, result) => {
-//       if (err) {
-//           console.error("Error fetching unread messages:", err);
-//           return res.status(500).json({ success: false, error: err.message });
-//       }
-
-//       res.json({ unreadCount: result[0].unreadCount });
-//   });
-// });
 
 // ✅ API: Mark Messages as Read When Chat Opens
 app.get("/api/unread-messages/:email", (req, res) => {
@@ -1089,7 +1146,11 @@ app.post("/api/clear-all-notifications", (req, res) => {
       return res.status(500).json({ success: false, error: err.message });
     }
 
-    res.json({ success: true, message: `All notifications cleared for ${receiverEmail}`, rowsAffected: result.affectedRows });
+    res.json({
+      success: true,
+      message: `All notifications cleared for ${receiverEmail}`,
+      rowsAffected: result.affectedRows,
+    });
   });
 });
 
@@ -1098,7 +1159,9 @@ app.get("/api/unread-messages-admin/:email", (req, res) => {
   const { email } = req.params;
 
   if (!email) {
-    return res.status(400).json({ error: "Admin email parameter is required." });
+    return res
+      .status(400)
+      .json({ error: "Admin email parameter is required." });
   }
 
   const sql = `
@@ -1137,14 +1200,14 @@ app.post("/api/request-course", async (req, res) => {
       service: "Gmail",
       auth: {
         user: process.env.EMAIL_USER, // Your email
-        pass: process.env.EMAIL_PASS  // Your email password
+        pass: process.env.EMAIL_PASS, // Your email password
       },
     });
 
     // Email content
     const mailOptions = {
-      from: email,  // Student's email
-      to: process.env.CONTACT_EMAIL,  // Your office email
+      from: email, // Student's email
+      to: process.env.CONTACT_EMAIL, // Your office email
       subject: "New Course Request",
       text: `
               Student Name: ${name}
@@ -1178,7 +1241,7 @@ app.get("/api/dashboard/stats", async (req, res) => {
       FROM users 
       GROUP BY role
     `;
-    
+
     const paymentStatsQuery = `
       SELECT 
         COUNT(*) as total_payments,
@@ -1186,9 +1249,15 @@ app.get("/api/dashboard/stats", async (req, res) => {
         AVG(amount) as avg_amount
       FROM payments
     `;
-    
+
     // Fetch Odoo data in parallel
-    const [localUserStats, localPaymentStats, odooStudents, odooCourses, odooLeads] = await Promise.all([
+    const [
+      localUserStats,
+      localPaymentStats,
+      odooStudents,
+      odooCourses,
+      odooLeads,
+    ] = await Promise.all([
       new Promise((resolve, reject) => {
         db.query(userStatsQuery, (err, result) => {
           if (err) reject(err);
@@ -1214,10 +1283,10 @@ app.get("/api/dashboard/stats", async (req, res) => {
             ODOO_PASSWORD,
             "res.partner",
             "search_count",
-            [["is_company", "=", false]]
-          ]
+            [["is_company", "=", false]],
+          ],
         },
-        id: 1
+        id: 1,
       }),
       // Fetch courses count from Odoo
       axios.post(ODOO_URL, {
@@ -1226,16 +1295,9 @@ app.get("/api/dashboard/stats", async (req, res) => {
         params: {
           service: "object",
           method: "execute_kw",
-          args: [
-            ODOO_DB,
-            2,
-            ODOO_PASSWORD,
-            "flc.course",
-            "search_count",
-            [[]]
-          ]
+          args: [ODOO_DB, 2, ODOO_PASSWORD, "flc.course", "search_count", [[]]],
         },
-        id: 2
+        id: 2,
       }),
       // Fetch leads/opportunities from Odoo
       axios.post(ODOO_URL, {
@@ -1244,59 +1306,57 @@ app.get("/api/dashboard/stats", async (req, res) => {
         params: {
           service: "object",
           method: "execute_kw",
-          args: [
-            ODOO_DB,
-            2,
-            ODOO_PASSWORD,
-            "crm.lead",
-            "search_count",
-            [[]]
-          ]
+          args: [ODOO_DB, 2, ODOO_PASSWORD, "crm.lead", "search_count", [[]]],
         },
-        id: 3
-      })
+        id: 3,
+      }),
     ]);
-    
+
     // Combine local and Odoo stats
     const dashboardStats = {
       // Local MySQL stats
       localUsers: localUserStats,
-      localPayments: localPaymentStats[0] || { total_payments: 0, total_amount: 0, avg_amount: 0 },
-      
+      localPayments: localPaymentStats[0] || {
+        total_payments: 0,
+        total_amount: 0,
+        avg_amount: 0,
+      },
+
       // Odoo stats (real data)
       odooStats: {
         totalStudents: odooStudents.data.result || 0,
         totalCourses: odooCourses.data.result || 0,
-        totalLeads: odooLeads.data.result || 0
+        totalLeads: odooLeads.data.result || 0,
       },
-      
+
       // Summary for dashboard
       summary: {
-        totalUsers: (localUserStats.reduce((sum, user) => sum + user.count, 0)) + (odooStudents.data.result || 0),
+        totalUsers:
+          localUserStats.reduce((sum, user) => sum + user.count, 0) +
+          (odooStudents.data.result || 0),
         totalCourses: odooCourses.data.result || 0,
         totalLeads: odooLeads.data.result || 0,
         totalPayments: localPaymentStats[0]?.total_payments || 0,
-        totalAmount: localPaymentStats[0]?.total_amount || 0
-      }
+        totalAmount: localPaymentStats[0]?.total_amount || 0,
+      },
     };
-    
+
     res.json(dashboardStats);
-    
   } catch (error) {
     console.error("Error fetching dashboard stats:", error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: "Failed to fetch dashboard stats",
-      details: error.message 
+      details: error.message,
     });
   }
 });
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
-  res.json({ 
-    status: "OK", 
+  res.json({
+    status: "OK",
     timestamp: new Date().toISOString(),
-    uptime: process.uptime()
+    uptime: process.uptime(),
   });
 });
 
@@ -1304,7 +1364,9 @@ app.get("/api/health", (req, res) => {
 app.get("/api/test-db", (req, res) => {
   db.query("SELECT 1 as test", (err, result) => {
     if (err) {
-      return res.status(500).json({ error: "Database connection failed", details: err.message });
+      return res
+        .status(500)
+        .json({ error: "Database connection failed", details: err.message });
     }
     res.json({ message: "Database connection successful", result });
   });
@@ -1322,7 +1384,7 @@ app.get("/api/courses/test", (req, res) => {
         country_id: [1, "USA"],
         program_level_id: [1, "Bachelor's"],
         total_tuition_fees_amount: 50000,
-        currency_id: [1, "USD"]
+        currency_id: [1, "USD"],
       },
       {
         id: 2,
@@ -1331,12 +1393,12 @@ app.get("/api/courses/test", (req, res) => {
         country_id: [1, "USA"],
         program_level_id: [2, "Master's"],
         total_tuition_fees_amount: 60000,
-        currency_id: [1, "USD"]
-      }
+        currency_id: [1, "USD"],
+      },
     ],
     totalCourses: 2,
     totalPages: 1,
-    currentPage: 1
+    currentPage: 1,
   });
 });
 

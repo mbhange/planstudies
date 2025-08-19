@@ -1,47 +1,285 @@
-import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import "../styles/Countries.css";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-const Uk = () => {
-    return (
-        <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-            <Navbar />
-            <h1 className='country'>Study in Italy</h1>
-            <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Flag_of_Italy_%28Pantone%2C_2006%29.svg/220px-Flag_of_Italy_%28Pantone%2C_2006%29.svg.png"
-                alt="Study in the USA"
-                style={{
-                    width: '25%',
-                    height: 'auto',
-                    marginBottom: '20px',
-                    display: 'block',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    borderRadius: '15px',
-                    animation: 'fadeIn 2s ease-in-out',
-                }}
-            />
-            <p>
-            Italy is renowned for its rich cultural heritage, world-class universities, and high standard of education. A destination steeped in history, art, and innovation, Italy offers international students an opportunity to study in some of the world’s most prestigious institutions while experiencing a vibrant lifestyle and unique cultural experiences.
-            </p>
+const ItalyAnimatedLayout = () => {
+  const [isVisible, setIsVisible] = useState(false);
 
-            <h2>Why Choose Italy?</h2>
-            <ul>
-                <li><strong>•	World-Class Education:    </strong>Italy is home to some of the most prestigious universities and institutions in the world, offering programs in art, engineering, business, medicine, architecture, and more.</li>
-                <li><strong>•	Rich Cultural Experience:     </strong>Studying in Italy offers a unique opportunity to immerse yourself in art, history, and culture, from ancient ruins to Renaissance masterpieces.</li>
-                <li><strong>•	English-Taught Programs:     </strong>Many Italian universities offer degree programs in English, making it accessible for students from around the world.</li>
-                <li><strong>•	Affordable Education:     </strong>Compared to other European countries, Italy provides an affordable education with lower tuition fees and cost of living, especially outside major cities like Rome and Milan.</li>
-                <li><strong>•	Work Opportunities:     </strong>Students in Italy can work part-time during their studies, and graduates can access post-study work opportunities in various fields.</li>
-                <li><strong>•	Central Location in Europe:     </strong>Italy’s strategic location provides easy access to the rest of Europe, making travel and exploration an exciting part of the student experience.</li>
-            </ul>
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
-            <p>
-            Start your academic journey in Italy with PlanStudies – where education meets history, art, and innovation in one of the most beautiful countries in the world!
-            </p>
-            <Footer />
+  return (
+    <>
+      <Navbar />
+
+      {/* Animated Hero Section */}
+      <section className="relative bg-custom-blue-gradient text-white py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-24 h-24 bg-white rounded-full animate-bounce"></div>
+          <div className="absolute top-1/2 left-1/2 w-16 h-16 bg-white rounded-full animate-ping"></div>
         </div>
-    );
+
+        <div className="relative max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div
+              className={`transform transition-all duration-1000 ${
+                isVisible
+                  ? "translate-x-0 opacity-100"
+                  : "-translate-x-full opacity-0"
+              }`}
+            >
+              <h1 className="text-4xl lg:text-6xl font-bold leading-tight mb-6">
+                Study in{" "}
+                <span className="text-yellow-300 animate-pulse">Italy</span>
+              </h1>
+              <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+                Unlock your potential with world-class education, Renaissance culture,
+                and endless opportunities in one of Europe's most beautiful and
+                historically rich countries.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  to="/contact"
+                  className="group btn-white-professional inline-flex items-center justify-center text-lg font-semibold px-8 py-4 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                >
+                  <span>Start Your Journey</span>
+                  <svg
+                    className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </Link>
+                <Link
+                  to="/programs"
+                  className="btn-outline-scale-only inline-flex items-center justify-center text-lg font-semibold px-8 py-4 rounded-lg transition-all duration-300"
+                >
+                  Explore Programs
+                </Link>
+              </div>
+            </div>
+
+            <div
+              className={`transform transition-all duration-1000 delay-300 ${
+                isVisible
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-full opacity-0"
+              }`}
+            >
+              <div className="relative">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/1920px-Flag_of_Italy.svg.png"
+                  alt="Italy Flag"
+                  className="w-full max-w-lg mx-auto h-80 object-cover rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-yellow-300 rounded-full animate-bounce opacity-80"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Animated Benefits Section */}
+      <section className="bg-gray-50 py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div
+            className={`text-center mb-16 transform transition-all duration-1000 ${
+              isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
+          >
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Why Choose Italy?
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Discover the exceptional advantages that make Italy a premier
+              destination for international education, culture, and personal growth
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                icon: "🎓",
+                title: "World-Class Education",
+                description:
+                  "Italy is home to some of the most prestigious universities and institutions in the world, offering programs in art, engineering, business, medicine, and architecture.",
+                delay: "delay-100",
+              },
+              {
+                icon: "🏛️",
+                title: "Rich Cultural Experience",
+                description:
+                  "Immerse yourself in art, history, and culture, from ancient Roman ruins to Renaissance masterpieces in world-famous museums.",
+                delay: "delay-200",
+              },
+              {
+                icon: "🌍",
+                title: "English-Taught Programs",
+                description:
+                  "Many Italian universities offer degree programs in English, making it accessible for international students from around the world.",
+                delay: "delay-300",
+              },
+              {
+                icon: "💰",
+                title: "Affordable Education",
+                description:
+                  "Compared to other European countries, Italy provides affordable education with lower tuition fees and reasonable cost of living.",
+                delay: "delay-400",
+              },
+              {
+                icon: "💼",
+                title: "Work Opportunities",
+                description:
+                  "Students can work part-time during studies, and graduates can access post-study work opportunities in various fields.",
+                delay: "delay-500",
+              },
+              {
+                icon: "🗺️",
+                title: "Central Location in Europe",
+                description:
+                  "Italy's strategic location provides easy access to the rest of Europe, making travel and exploration an exciting part of student life.",
+                delay: "delay-600",
+              },
+            ].map((benefit, index) => (
+              <div
+                key={index}
+                className={`group bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transform transition-all duration-500 hover:-translate-y-2 ${
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
+                } ${benefit.delay}`}
+              >
+                <div className="w-16 h-16 bg-custom-blue-gradient rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-3xl">{benefit.icon}</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                  {benefit.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {benefit.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Animated Statistics Section */}
+      <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+            {[
+              {
+                number: "95+",
+                label: "Universities",
+                sublabel: "Accredited institutions",
+              },
+              {
+                number: "80%",
+                label: "Graduate Success",
+                sublabel: "Employment rate",
+              },
+              {
+                number: "58",
+                label: "UNESCO Sites",
+                sublabel: "Most in the world",
+              },
+              {
+                number: "60+",
+                label: "Countries",
+                sublabel: "International students",
+              },
+            ].map((stat, index) => (
+              <div
+                key={index}
+                className={`transform transition-all duration-700 hover:scale-110 ${
+                  isVisible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
+                }`}
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                <div className="text-5xl font-bold text-blue-600 mb-2 animate-pulse">
+                  {stat.number}
+                </div>
+                <div className="text-xl font-semibold text-gray-900 mb-1">
+                  {stat.label}
+                </div>
+                <div className="text-gray-600">{stat.sublabel}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Animated CTA Section */}
+      <section className="relative bg-custom-blue-gradient py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Animated background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-600 to-transparent animate-pulse"></div>
+        </div>
+
+        <div className="relative max-w-4xl mx-auto text-center">
+          <div
+            className={`transform transition-all duration-1000 ${
+              isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
+            }`}
+          >
+            <h3 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+              Ready to Begin Your Italian Adventure?
+            </h3>
+            <p className="text-xl text-gray-300 mb-10 leading-relaxed max-w-3xl mx-auto">
+              Join thousands of international students who have chosen Italy as
+              their pathway to success. Let PlanStudies guide you through every
+              step of your educational journey in the land of history, art, and innovation.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link
+                to="/contact"
+                className="group btn-white-professional inline-flex items-center justify-center text-lg font-semibold px-10 py-4 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              >
+                <span>Get Started Today</span>
+                <svg
+                  className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </Link>
+              <Link
+                to="/about"
+                className="btn-outline-scale-only inline-flex items-center justify-center text-lg font-semibold px-10 py-4 rounded-lg transition-all duration-300"
+              >
+                Learn More About Us
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </>
+  );
 };
 
-export default Uk;
+export default ItalyAnimatedLayout;
